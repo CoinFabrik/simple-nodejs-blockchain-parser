@@ -1,5 +1,5 @@
 {
-  "name": "bitcore-lib-parse-blockchain-tutorial",
+  "name": "simple-nodejs-blockchain-parser",
   "version": "1.0.0",
   "description": "Parse the raw blockchain data with Bitcore.",
   "main": "blockchain-parser.js",
