@@ -1,0 +1,15 @@
+{
+  "name": "bitcore-lib-parse-blockchain-tutorial",
+  "version": "1.0.0",
+  "description": "Parse the raw blockchain data with Bitcore.",
+  "main": "blockchain-parser.js",
+  "scripts": {
+    "start": "node blockchain-parser",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Fernando D. Tiberti",
+  "license": "ISC",
+  "dependencies": {
+    "bitcore-lib": "^0.13.10"
+  }
+}
