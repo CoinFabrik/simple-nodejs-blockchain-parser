@@ -75,11 +75,28 @@ function bufferReader(buffer) {
   }
 }
 
+function readHeader(reader) {
+  var version = reader.read(4);
+  if (version == null) {
+    return null;
+  }
+  if (version.toString('hex') == 'f9beb4d9') {
+    //It's actually the magic number of a different block (previous one was empty)
+    reader.read(4); //block size
+    return readHeader(reader);
+  }
+  else {
+    return reader.read(76); //previous hash + merkle hash + time + bits + nonce
+  }
+}
+
 for(var i = 0; i < 382; i++) {
   var fileNumber = ('0000' + i).slice(-5),
     data = fs.readFileSync(bitcoinDataDir + '/blocks/blk' + fileNumber + '.dat'),
     reader = bufferReader(data),
-    blockHeader = reader.read(88);
+    magic = reader.read(4),
+    blockSize = reader.read(4),
+    blockHeader = readHeader(reader);
   while(blockHeader !== null) {
     var txCount = toInt(readVarInt(reader));
     console.log('\n---- New block with ' + txCount + ' transactions ----\n');
@@ -88,6 +105,8 @@ for(var i = 0; i < 382; i++) {
       var parsedTx = new bitcore.Transaction(rawTx);
       console.dir(parsedTx.toObject());
     }
-    blockHeader = reader.read(88);
+    magic = reader.read(4);
+    blockSize = reader.read(4);
+    blockHeader = readHeader(reader);
   }
 }
