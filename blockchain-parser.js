@@ -85,9 +85,7 @@ function readHeader(reader) {
     reader.read(4); //block size
     return readHeader(reader);
   }
-  else {
-    return reader.read(76); //previous hash + merkle hash + time + bits + nonce
-  }
+  return reader.read(76); //previous hash + merkle hash + time + bits + nonce
 }
 
 for(var i = 0; i < 382; i++) {
